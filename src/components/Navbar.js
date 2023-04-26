@@ -4,9 +4,10 @@ import React, {
 } from "react";
 
 function Navbar(props) {
-  const [role, setRole] = useState("hr");
+  const [role, setRole] = useState("karyawan");
   const [list, setList] = useState([]);
 
+  // Menu admin
   const listMenuAdmin = [
     {
       name: "Dashboard",
@@ -14,14 +15,14 @@ function Navbar(props) {
       lock: "dashboard",
     },
     {
-      name: "Dashboard",
+      name: "Data Karyawan",
       icon: "fa-solid fa-user",
       lock: "admin_listkaryawan",
     },
     {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
-      lock: "admin_laporan",
+      lock: "admin_penggajian",
     },
     {
       name: "Laporan Absensi",
@@ -30,6 +31,7 @@ function Navbar(props) {
     },
   ];
 
+  // Menu Hr
   const listMenuHr = [
     {
       name: "Dashboard",
@@ -86,8 +88,8 @@ function Navbar(props) {
 
 
   // Send data lock to file home
-  const Linkto = (to) => {
-    props.navigation(to);
+  const Linkto = (to, titlename) => {
+    props.navigation(to,titlename);
   };
 
   return (
@@ -136,7 +138,7 @@ function Navbar(props) {
                 <div
                   key={index}
                   className='d-flex flex-row'
-                  onClick={() => Linkto(e.lock)}
+                  onClick={() => Linkto(e.lock, e.name)}
                 >
                   <i
                     className={`${e.icon} pe-3 pt-1 fs-6`}
