@@ -78,6 +78,7 @@ function Navbar(props) {
     },
   ];
 
+  // setRole
   useEffect(() => {
     role === "admin"
       ? setList(listMenuAdmin)
@@ -87,7 +88,7 @@ function Navbar(props) {
   }, [role]);
 
 
-  // Send data lock to file home
+  // ngirim data to dan title name ke home
   const Linkto = (to, titlename) => {
     props.navigation(to,titlename);
   };
