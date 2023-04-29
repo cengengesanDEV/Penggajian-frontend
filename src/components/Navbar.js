@@ -2,32 +2,35 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Navbar(props) {
   const [role, setRole] = useState("admin");
   const [list, setList] = useState([]);
+
+  const navigation = useNavigate()
 
   // Menu admin
   const listMenuAdmin = [
     {
       name: "Dashboard",
       icon: "fa-brands fa-slack",
-      lock: "dashboard",
+      navigate: "/home",
     },
     {
       name: "Data Karyawan",
       icon: "fa-solid fa-user",
-      lock: "admin_listkaryawan",
+      navigate: "/admin",
     },
     {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
-      lock: "admin_penggajian",
+      navigate: "/admin/penggajian",
     },
     {
       name: "Laporan Absensi",
       icon: "fa-solid fa-file-export",
-      lock: "admin_absensi",
+      navigate: "/admin/absensi",
     },
   ];
 
@@ -36,17 +39,17 @@ function Navbar(props) {
     {
       name: "Dashboard",
       icon: "fa-brands fa-slack",
-      lock: "dashboard",
+      navigate: "dashboard",
     },
     {
       name: "Data Karyawan",
       icon: "fa-solid fa-user",
-      lock: "hr_listkaryawan",
+      navigate: "hr_listkaryawan",
     },
     {
       name: "Verifikasi",
       icon: "fa-solid fa-file-export",
-      lock: "hr_verifikasi",
+      navigate: "hr_verifikasi",
     },
   ];
 
@@ -54,27 +57,27 @@ function Navbar(props) {
     {
       name: "Dashboard",
       icon: "fa-brands fa-slack",
-      lock: "dashboard",
+      navigate: "dashboard",
     },
     {
       name: "Profile",
       icon: "fa-solid fa-user",
-      lock: "karyawan_profile",
+      navigate: "karyawan_profile",
     },
     {
       name: "Presensi",
       icon: "fa-solid fa-person-chalkboard",
-      lock: "karyawan_presensi",
+      navigate: "karyawan_presensi",
     },
     {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
-      lock: "karyawan_penggajian",
+      navigate: "karyawan_penggajian",
     },
     {
       name: "Laporan Absensi",
       icon: "fa-solid fa-file-export",
-      lock: "karyawan_absensi",
+      navigate: "karyawan_absensi",
     },
   ];
 
@@ -140,7 +143,7 @@ function Navbar(props) {
                   key={index}
                   style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px'}}
                   className='d-flex flex-row'
-                  onClick={() => Linkto(e.lock, e.name)}
+                  onClick={() => navigation(e.navigate)}
                 >
                   <i
                     className={`${e.icon} pe-3 pt-1 fs-6`}

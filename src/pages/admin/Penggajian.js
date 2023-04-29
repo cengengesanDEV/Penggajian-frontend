@@ -1,8 +1,12 @@
 import React from 'react'
+import Navbar from "../../components/Navbar";
 
  function Penggajian() {
   return (
-     <div>Penggajian admin</div>
+     <>
+     <Navbar />
+     <p>Penggajian admin</p>
+     </>
   )
 }
 

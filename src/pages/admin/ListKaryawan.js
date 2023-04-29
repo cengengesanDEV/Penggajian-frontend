@@ -2,6 +2,7 @@ import React from 'react'
 
 import css from '../../style/admin/Listkaryawan.module.css'
 import TableKaryawan from '../../components/Tb_KaryawanAdmin'
+import Navbar from "../../components/Navbar";
 
 
 
@@ -9,6 +10,7 @@ function ListKaryawan(props) {
 
   return (
     <>
+    <Navbar/>
       {/* style */}
       <div className="container-fluid bg-dark">
         <p>-</p>
