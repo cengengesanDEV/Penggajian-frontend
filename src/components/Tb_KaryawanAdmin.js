@@ -2,35 +2,13 @@ import React, { useEffect, useState } from "react";
 
 import css from "../style/components/TableKaryawanAdmin.module.css"
 import axios from "axios";
+import { useNavigate } from "react-router";
 
-function Tb_KaryawanAdmin(props) {
+function Tb_KaryawanAdmin() {
   
+  const navigate = useNavigate()
   const [data, setData] = useState([])
   
-  
-  let array = [
-    {NIK:"1234567890123123",nama:'mark',jabatan:'staff',alamat:'priuuuk', id:3},
-    {NIK:"1234567890",nama:'mark',jabatan:'administrasi',alamat:'Jl. Pasopati Blok A no/70 Rt 002 Rw 0000000001'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-    {NIK:"1234567890",nama:'mark',jabatan:'staff',alamat:'priuuuk'},
-  ]
-
-
-
-
-  const Linkto = (to, titlename) => {
-    props.navigation(to,titlename);
-  };
 
 
   useEffect(()=> {
@@ -81,7 +59,7 @@ function Tb_KaryawanAdmin(props) {
                 <td  style={{ width: "100px" }}>{e.jabatan?.length  > 12 ? `${e.jabatan?.slice(0,12)}...` : e.jabatan}</td>
                 <td style={{ width: "200px" }}>{e.alamat?.length  > 45 ? `${e.alamat?.slice(0,45)}...` : e.alamat}</td> */}
                 <td className=" text-center">
-                  <button className={`${css.detail_button}`} onClick={() => Linkto('admin_karyawan_detail', 'karyawan_detail', e.id)}>Detail</button>
+                  <button className={`${css.detail_button}`} onClick={() => navigate(`/admin/data-karyawan/${e.id}`)}>Detail</button>
                 </td>
               </tr>
             ))}

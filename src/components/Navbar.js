@@ -20,7 +20,7 @@ function Navbar(props) {
     {
       name: "Data Karyawan",
       icon: "fa-solid fa-user",
-      navigate: "/admin",
+      navigate: "/admin/all-karyawan",
     },
     {
       name: "Laporan Penggajian",
@@ -91,10 +91,6 @@ function Navbar(props) {
   }, [role]);
 
 
-  // ngirim data to dan title name ke home
-  const Linkto = (to, titlename) => {
-    props.navigation(to,titlename);
-  };
 
   return (
     <>

@@ -3,14 +3,16 @@ import React from 'react'
 import css from '../../style/admin/Listkaryawan.module.css'
 import TableKaryawan from '../../components/Tb_KaryawanAdmin'
 import Navbar from "../../components/Navbar";
+import Title from "../../components/Title"
 
 
 
-function ListKaryawan(props) {
+function ListKaryawan() {
 
   return (
     <>
     <Navbar/>
+    <Title title={'List Karyawan'} />
       {/* style */}
       <div className="container-fluid bg-dark">
         <p>-</p>
@@ -34,7 +36,7 @@ function ListKaryawan(props) {
           {/* Content right */}
           <div className="col-lg-10 d-flex flex-row">
             <div className='' style={{backgroundColor:'#f7f7f7', width:'2px', borderRadius:'50px'}}></div>
-            <TableKaryawan navigation={props.navigation} />
+            <TableKaryawan />
           </div>
 
         </div>

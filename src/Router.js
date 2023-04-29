@@ -16,7 +16,7 @@ import Presensi from "./pages/karyawan/Presensi";
 import ListKaryawanAdmin from "./pages/admin/ListKaryawan";
 import PenggajianAdmin from "./pages/admin/Penggajian";
 import AbsensiAdmin from "./pages/admin/Absensi";
-import AllDataKaryawan from "./pages/admin/DetailKaryawan";
+import DetailKaryawan from "./pages/admin/DetailKaryawan";
 
 import Home from "./pages/Home";
 
@@ -31,10 +31,10 @@ const router = createBrowserRouter([
   { path: "/karyawan/presensi", element: <Presensi /> },
   { path: "/karyawan/penggajian", element: <Penggajian /> },
   { path: "/karyawan/profile", element: <Profile /> },
-  { path: "/admin", element: <ListKaryawanAdmin /> },
+  { path: "/admin/all-karyawan", element: <ListKaryawanAdmin /> },
   { path: "/admin/penggajian", element: <PenggajianAdmin /> },
   { path: "/admin/absensi", element: <AbsensiAdmin /> },
-  { path: "/admin/data-karyawan", element: <AllDataKaryawan /> },
+  { path: "/admin/data-karyawan/:idkaryawan", element: <DetailKaryawan /> },
 ]);
 
 export default router;
