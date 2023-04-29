@@ -4,7 +4,7 @@ import React, {
 } from "react";
 
 function Navbar(props) {
-  const [role, setRole] = useState("karyawan");
+  const [role, setRole] = useState("admin");
   const [list, setList] = useState([]);
 
   // Menu admin
@@ -138,6 +138,7 @@ function Navbar(props) {
               {list.map((e, index) => (
                 <div
                   key={index}
+                  style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px'}}
                   className='d-flex flex-row'
                   onClick={() => Linkto(e.lock, e.name)}
                 >

@@ -19,6 +19,8 @@ import Presensi from "./karyawan/Presensi";
 import ListKaryawanAdmin from "./admin/ListKaryawan";
 import PenggajianAdmin from "./admin/Penggajian";
 import AbsensiAdmin from "./admin/Absensi";
+import AllDataKaryawan from "./admin/DetailKaryawan";
+import Footer from "../components/Footer";
 
 function Home() {
   const [sesion, setSesion] = useState(<Dashboard />);
@@ -43,10 +45,16 @@ function Home() {
         break;
 
       // Sesion Admin
+      case "admin_karyawan_detail":
+        {
+          setTitleText(titlename);
+          setSesion(<AllDataKaryawan />);
+        }
+        break;
       case "admin_listkaryawan":
         {
           setTitleText(titlename);
-          setSesion(<ListKaryawanAdmin />);
+          setSesion(<ListKaryawanAdmin navigation={switchSesion} />);
         }
         break;
       case "admin_penggajian":
@@ -117,6 +125,7 @@ function Home() {
       <Navbar navigation={switchSesion} />
       <TitleBar title={titleText} />
       {sesion}
+      <Footer />
     </>
   );
 }
