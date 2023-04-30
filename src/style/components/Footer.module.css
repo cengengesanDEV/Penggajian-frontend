@@ -1,0 +1,13 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  color: white;
+  font-family: 'Lato';
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 20px;
+  padding-top: 20px;
+}

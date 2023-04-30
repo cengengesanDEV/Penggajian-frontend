@@ -1,0 +1,15 @@
+.pattern_image {
+  background-image: url('../../assets/patternpad.png');
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 21px;
+  padding: 0 0 0 50px;
+  text-decoration: underline;
+}

@@ -6,6 +6,9 @@ import reportWebVitals from "./reportWebVitals";
 // import router
 import { RouterProvider } from "react-router-dom";
 import router from "./Router";
+import { PersistGate } from "redux-persist/integration/react";
+import store, { persistedStore } from "./redux/store";
+import { Provider } from "react-redux";
 // import { PersistGate } from "redux-persist/integration/react";
 // import store, { persistedStore } from "./redux/store";
 // import { Provider } from "react-redux";
@@ -13,11 +16,11 @@ import router from "./Router";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <Provider store={store}>
-      <PersistGate loading={null} persistor={persistedStore}> */}
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistedStore}>
         <RouterProvider router={router} />
-      {/* </PersistGate>
-    </Provider> */}
+      </PersistGate>
+    </Provider>
   </React.StrictMode>
 );
 
