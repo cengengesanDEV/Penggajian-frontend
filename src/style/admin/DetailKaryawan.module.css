@@ -1,17 +1,69 @@
-.container_image {
-  /* position: relative; */
-}
-
-.image {
+.background_body {
   position: absolute;
-  width: 500px;
-  height: 500px;
-  top: -70px;
-  left: -150px;
+  left: -80px;
+  top: 200px;
   z-index: -1;
+  width: 35%;
+  transform: rotate(0deg);
+  
 }
 
 .image_user {
-  width: 250px;
-  height: 300px;
+  width: 200px;
+  height: 250px;
+  border-radius: 20px;
+  box-shadow: 9px 4px 5px -2px rgba(145,145,145,0.75);
+}
+
+.form_detail {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.search {
+  background-color: #292b2c;
+  color: white;
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 10px 20px 10px 20px;
+  width: 100%;
+}
+
+.title_search {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.desc_search {
+  font-size: 12px;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+
+.table_head {
+  background-color: #292b2c;
+  font-family: 'Arimo';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  font-size: 16px;
+}
+
+.table_body {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  font-size: 14px;
 }

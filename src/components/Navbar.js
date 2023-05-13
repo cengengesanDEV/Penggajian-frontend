@@ -3,6 +3,7 @@ import React, {
   useState,
 } from "react";
 import { useNavigate } from "react-router-dom";
+import css from '../style/Home.module.css'
 
 function Navbar(props) {
   const [role, setRole] = useState("admin");
@@ -113,38 +114,38 @@ function Navbar(props) {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div
-            className='offcanvas offcanvas-end bg-dark '
+            className={`offcanvas offcanvas-end text-dark bg-dark ${css.image_side}`}
             tabIndex='-1'
             id='offcanvasNavbar'
             aria-labelledby='offcanvasNavbarLabel'
           >
-            <div className='offcanvas-header'>
+            <div className='offcanvas-header bg-dark'>
               <h5
-                className='offcanvas-title'
+                className='offcanvas-title text-white'
                 id='offcanvasNavbarLabel'
               >
                 Menu
               </h5>
               <button
-                type='button'
+                // type='button'
                 className='btn-close'
                 data-bs-dismiss='offcanvas'
                 aria-label='Close'
               ></button>
             </div>
-            <div className='offcanvas-body'>
+            <div className={`offcanvas-body ${css.hover_menu}`}>
               {/* Body Menu */}
               {list.map((e, index) => (
                 <div
                   key={index}
-                  style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px'}}
+                  style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px', padding:'10px 0 0 10px'}}
                   className='d-flex flex-row'
                   onClick={() => navigation(e.navigate)}
                 >
                   <i
                     className={`${e.icon} pe-3 pt-1 fs-6`}
                   ></i>
-                  <p>{e.name}</p>
+                  <p className="">{e.name}</p>
                 </div>
               ))}
               <p>Logout</p>
