@@ -100,7 +100,7 @@ function Navbar(props) {
         data-bs-theme='dark'
       >
         <div className='container'>
-          <a className='navbar-brand' href='#'>
+          <a className='navbar-brand' href='/'>
             CV. Dua Saudara Plastic
           </a>
           <button

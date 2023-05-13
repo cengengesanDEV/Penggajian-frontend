@@ -4,7 +4,7 @@ import storage from "redux-persist/lib/storage";
 import reducers from "./reducers/index";
 
 const persistConfig = {
-  key: "Janjigacoffee",
+  key: "Penggajian",
   storage,
 };
 
