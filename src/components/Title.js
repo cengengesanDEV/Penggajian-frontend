@@ -5,7 +5,7 @@ import css from '../style/components/Title.module.css'
 function Title({title}) {
   return (
     <>
-      <div className="bg-warning">
+      <div className="bg-dark">
 
         {/* Title Image */}
         <div className="">

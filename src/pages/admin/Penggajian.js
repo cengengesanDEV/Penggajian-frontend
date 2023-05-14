@@ -3,13 +3,22 @@ import Navbar from "../../components/Navbar";
 import Footer from '../../components/Footer';
 import { Radio, Space, Tabs } from 'antd';
 import Title from '../../components/Title';
+import DataPenggajian from './childern/DataPenggajian';
+import Laporan from './childern/Laporan';
+
 
  function Penggajian() {
 
-// const [tabPosition, setTabPosition] = useState('left');
-//   const changeTabPosition = (e) => {
-//     setTabPosition(e.target.value);
-//   };
+   const Content = [
+      {
+         title:'Data Laporan',
+         component: <Laporan />
+      },
+      {
+         title:'Data Penggajian',
+         component: <DataPenggajian />
+      },
+   ]
 
   return (
      <>
@@ -20,11 +29,11 @@ import Title from '../../components/Title';
       <div className="container-fluid">
          <Tabs
          tabPosition={'left'}
-         items={['Penggajian', 'Lemburan', 'Laporan'].map((el, index) => {
+         items={Content.map((el, index) => {
             return {
-               label: `Data ${el}`,
+               label: el.title,
                key: index,
-               children: `Data asd`,
+               children: el.component,
             };
          })}
          />

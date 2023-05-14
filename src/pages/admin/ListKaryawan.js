@@ -1,7 +1,7 @@
 import React from 'react'
 
 import css from '../../style/admin/Listkaryawan.module.css'
-import TableKaryawan from '../../components/Tb_KaryawanAdmin'
+import TableKaryawan from '../../components/table/Tb_KaryawanAdmin'
 import Navbar from "../../components/Navbar";
 import Title from "../../components/Title"
 

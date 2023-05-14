@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import css from "../style/components/TableKaryawanAdmin.module.css"
+import css from "../../style/components/TableKaryawanAdmin.module.css"
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { Skeleton } from "antd";
@@ -9,8 +9,19 @@ function Tb_KaryawanAdmin() {
   
   const navigate = useNavigate()
   const [data, setData] = useState([])
+  const [temp, setTemp] = useState({})
   const [loading, setLoading] = useState(false)
   
+  const rendering = (parsing) => {
+    switch ('') {
+      case '1':
+        const rows = ['No', 'NIK','Name', 'Divisi', 'Address', 'Action']
+        const cols = parsing
+        setTemp([{row:rows, col:cols}])
+      default:
+        break;
+    }
+  }
 
 
   useEffect(()=> {
@@ -21,7 +32,7 @@ function Tb_KaryawanAdmin() {
       }
     })
     .then((res)=>{
-      console.log(res.data)
+      console.log(res.data)      
       setData(res.data.data)
     })
     .catch((err)=> {
@@ -30,9 +41,12 @@ function Tb_KaryawanAdmin() {
     .finally(()=>
       setTimeout(() => {
         setLoading(false)
-      }, 5000)
+      }, 1000)
     )
   }, [])
+
+  
+
 
   return (
     <>
@@ -46,7 +60,7 @@ function Tb_KaryawanAdmin() {
           <hr style={{color:'black'}} />
           <table className={`table table-responsive`} >
             <thead className={`text-white  ${css.table_head}`}>
-              <tr className="">
+              <tr className="">               
                 <th scope='col'>No</th>
                 <th scope='col'>NIK</th>
                 <th scope='col'>Nama</th>
