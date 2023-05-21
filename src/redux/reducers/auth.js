@@ -7,17 +7,15 @@ const initialState = {
   error: null,
   token: null,
   profile: {
-    email: null,
-    username: null,
-    fullname: null,
-    image: null,
-    position: null,
-    role: null,
-    phone_number: null,
-    address: null,
-    basic_salary: null,
-    birth_date: null,
-    nik: null,
+    id: "",
+    email: "",
+    fullname: "",
+    image: "",
+    position: "",
+    phone_number: "",
+    address: "",
+    basic_salary: "",
+    nik: "",
   },
 };
 
@@ -51,16 +49,18 @@ const authReducer = (prevState = initialState, { type, payload }) => {
         isLoading: false,
         error: null,
         profile: {
-          email: payload.data.result[0].email,
-          role: payload.data.result[0].role,
-          phone_number: payload.data.result[0].phone_number,
-          displayname: payload.data.result[0].displayname,
-          firstname: payload.data.result[0].firstname,
-          lastname: payload.data.result[0].lastname,
-          gender: payload.data.result[0].gender,
-          birthday: payload.data.result[0].birthday,
-          address: payload.data.result[0].address,
-          image: payload.data.result[0].image,
+          id: payload.id,
+          email: payload.email,
+          fullname: payload.fulname,
+          image: payload.image,
+          position: payload.position,
+          phone_number: payload.phone_number,
+          address: payload.address,
+          basic_salary: payload.basic_salary,
+          nik: payload.nik,
+          overtime_salary: payload.overtime_salary,
+          birth_date: payload.birth_date,
+          role: payload.role
         },
       };
 
@@ -80,19 +80,18 @@ const authReducer = (prevState = initialState, { type, payload }) => {
         isLoading: false,
         isError: true,
         isFulfilled:false,
-        error: payload.error.data.msg,
+        error: payload,
       };
 
     case login + fulfilled:
-      return console.log(payload)
-      // {
-      //   ...prevState,
-      //   isLoading: false,
-      //   isError: false,
-      //   isFulfilled: true,
-      //   token: payload.data,
-      //   error: null,
-      // };
+      return {
+        ...prevState,
+        isLoading: false,
+        isError: false,
+        isFulfilled: true,
+        token: payload,
+        error: null,
+      };
 
     // logout
     case logout + pending:

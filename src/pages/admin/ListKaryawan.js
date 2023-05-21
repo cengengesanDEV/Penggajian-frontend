@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import css from '../../style/admin/Listkaryawan.module.css'
-import TableKaryawan from '../../components/table/Tb_KaryawanAdmin'
+import Tables from '../../components/table/Tb_KaryawanAdmin'
 import Navbar from "../../components/Navbar";
 import Title from "../../components/Title"
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 
 
 function ListKaryawan() {
-
   return (
     <>
     <Navbar/>
@@ -36,9 +37,8 @@ function ListKaryawan() {
           {/* Content right */}
           <div className="col-lg-10 d-flex flex-row">
             <div className='' style={{backgroundColor:'#f7f7f7', width:'2px', borderRadius:'50px'}}></div>
-            <TableKaryawan />
+            <Tables />
           </div>
-
         </div>
         
         

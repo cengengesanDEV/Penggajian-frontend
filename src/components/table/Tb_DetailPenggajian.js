@@ -6,12 +6,12 @@ import moment from 'moment';
 
 function Tb_DetailPenggajian() {
   const onChange = (date, dateString) => {
-    console.log("date",date);
-    console.log("dateString",moment(dateString).month() + 1);
+    // console.log("date",date);
+    // console.log("dateString",moment(dateString).month() + 1);
   };
   return (
     <>
-      <div className="container px-5'" style={{height:'500px', overflowY: 'scroll',overflowX: 'hidden'}}>
+      <div className="container px-5'" style={{height:'500px', overflowY: 'scroll'}}>
         <div className={`sticky-top bg-dark ${css.search} `}>
           <p className={css.title_search}>Filter : </p>
            <Space direction="vertical">
@@ -28,7 +28,7 @@ function Tb_DetailPenggajian() {
               <th scope='col'>Jabatan</th>
               <th scope='col'>Lembur</th>
               <th scope='col'>Salary</th>
-              <th scope='col'>Status</th>
+              <th className='text-center' scope='col'>Status</th>
               <th scope='col'>Description</th>
             </tr>
           </thead>
@@ -38,9 +38,9 @@ function Tb_DetailPenggajian() {
                 <td>Udin</td>
                 <td>Staff</td>
                 <td>10</td>
-                <td>-</td>
-                <td><Tag color="red" >Verify</Tag></td>
-                <td>-</td>
+                <td>800000</td>
+                <td className='text-center'><Tag color="red" >Menunggu Verifikasi</Tag></td>
+                <td><button>View</button></td>
               </tr>
           </tbody>
         </table>

@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Dashboard(props) {
+function Dashboard({roles}) {
   
   return (
     <>
-    <div>Dashboard</div>
+    <div>Dashboard {roles}</div>
     </>
   )
 }

@@ -23,8 +23,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 
 const router = createBrowserRouter([
-  { path: "/login", element: <Login /> },
-  { path: "/", element: <Home /> },
+  { path: "/", element: <Login /> },
+  { path: "/home", element: <Home /> },
   { path: "/hrd", element: <ListKaryawan /> },
   { path: "/hrd/verifikasi", element: <Verifikasi /> },
   { path: "/karyawan", element: <Absensi /> },

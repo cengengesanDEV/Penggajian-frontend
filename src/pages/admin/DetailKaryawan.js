@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 
@@ -9,10 +9,35 @@ import Title from "../../components/Title"
 import Navbar from "../../components/Navbar"
 import Footer from "../../components/Footer"
 import Tables from "../../components/table/Tb_PenggajianAdmin"
+import { GetDetailKaryawan } from '../../utility/axios'
+import moment from "moment";
+import { Descriptions } from "antd";
+import { useSelector } from "react-redux";
 
 
 function DetailKaryawan() {
   const {idkaryawan} = useParams()
+  const token = useSelector((state) => state.auth.token)
+
+  const [profile, setProfile] = useState({})
+  const [absent, setAbsent] = useState([])
+  const [filter, setFilter] = useState({
+    month: moment().month() + 1, 
+    year:moment().year()
+  })
+
+
+  useEffect(() => {
+    GetDetailKaryawan(idkaryawan, filter.month, filter.year, token)
+    .then((res) => {
+      console.log("profil", res.data)
+      setProfile(res.data.data)
+      setAbsent(res.data.data.data_absent)
+    })
+    .catch((err) => console.log("profilerr", err))
+  },[filter])
+
+
 
 
   return (
@@ -30,51 +55,32 @@ function DetailKaryawan() {
           {/* content left */}
           <div className={`col-lg-4 ${css.container_image} `}>
             <img src={Jelly} alt="" className={`${css.background_body}`} />
-            <img src={user_image} alt="" className={css.image_user} />
+            <img src={profile.image} alt="" className={css.image_user} />
           </div>
 
           {/* content center */}
-          <div className="col-lg-5">
-            <div className={`row text-start ${css.form_detail}`}>
-              <div className="col-lg-4">
-                {['Nama', 'Email', 'Jabatan', 'Nomor Telpon', 'Umur', 'Salary', 'Jam Kerja'].map((e, index) => (
-                  // <div className="" key={index}>
-                    <p>{e}</p>
-                  // </div>
-                ))}
-              </div>
-              <div className="col-lg-1">
-                <p>:</p>
-                <p>:</p>
-                <p>:</p>
-                <p>:</p>
-                <p>:</p>
-                <p>:</p>
-                <p>:</p>
-              </div>
-              <div className="col-lg-7">
-                <p>{idkaryawan}</p>
-                <p>najkshdjkhaskdjhkajs</p>
-                <p>najkshdjkhaskdjhkajs</p>
-                <p>najkshdjkhaskdjhkajs</p>
-                <p>najkshdjkhaskdjhkajs</p>
-                <p>najkshdjkhaskdjhkajs</p>
-                <p>najkshdjkhaskdjhkajs</p>
-              </div>
+          <div className="col-lg-8">
+            <Descriptions title="Detail Karyawan" layout="vertical">
+              <Descriptions.Item label="Nama">{profile.fullname}</Descriptions.Item>
+              <Descriptions.Item label="Email">{profile.email}</Descriptions.Item>
+              <Descriptions.Item label="NIK">{profile.nik}</Descriptions.Item>
+              <Descriptions.Item label="Nomor Telpon">{profile.phone_number}</Descriptions.Item>
+              <Descriptions.Item label="Tanggal Lahir">{moment(profile.birth_date).format('DD-MM-YYYY')}</Descriptions.Item>
+              <Descriptions.Item label="Jam Kerja">08:00 - 15:00</Descriptions.Item>
+              <Descriptions.Item label="Jabatan">{profile.position}</Descriptions.Item>
+              <Descriptions.Item label="Alamat">{profile.address}</Descriptions.Item>
+            </Descriptions>
             </div>
           </div>
 
-          {/* content right */}
-          <div className="col-lg-3">
-            <p>Noted : -</p>
-          </div>
-        </div>
+    
+        
       </div>
 
       <br />
       <br />
 
-      <Tables />
+      <Tables ChangeFilter={(value)=> setFilter(value)} keterangan={profile} data={absent}/>
 
         <br />
         <br />

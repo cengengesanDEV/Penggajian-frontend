@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: scroll !important;
 }
 
 code {
@@ -23,6 +24,7 @@ html {
   background: #ededed;
   margin: 0 auto;
 }
+
 
 .h1,
 .h2,

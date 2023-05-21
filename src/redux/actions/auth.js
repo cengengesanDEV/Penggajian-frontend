@@ -35,12 +35,12 @@ const loginPending = () => ({
 
 const loginRejected = (error) => ({
   type: ACTION_STRING.login.concat(ACTION_STRING.rejected),
-  payload: { error },
+  payload: error,
 });
 
 const loginFulfilled = (payload) => ({
   type: ACTION_STRING.login.concat(ACTION_STRING.fulfilled),
-  data: payload,
+  payload: payload,
 });
 
 const loginThunk = (body) => {
@@ -49,9 +49,11 @@ const loginThunk = (body) => {
       await dispatch(loginPending());
       const result = await Login(body);
       await dispatch(loginFulfilled(result.data.data.token));
+      await dispatch(userIDThunk(result.data.data.token))
     } catch (error) {
-      console.log(error);
-      dispatch(loginRejected(error));
+      console.log(error.response.data.msg);
+      dispatch(loginRejected(error.response.data.msg));
+      throw error.response.data.msg
     }
   };
 };
@@ -68,7 +70,7 @@ const profileRejected = (error) => ({
 
 const profileFulfilled = (data) => ({
   type: ACTION_STRING.profile.concat(ACTION_STRING.fulfilled),
-  payload: { data },
+  payload: data ,
 });
 
 const userIDThunk = (token) => {
@@ -76,11 +78,12 @@ const userIDThunk = (token) => {
     try {
       await dispatch(profilePending());
       const result = await GetProfile(token);
-      console.log(result.data);
-      dispatch(profileFulfilled(result.data));
+      // console.log(result.data);
+      dispatch(profileFulfilled(result.data.data));
     } catch (error) {
-      console.log(error);
+      // console.log("errorUSERID", error.response.data);
       dispatch(profileRejected(error));
+      throw error
     }
   };
 };

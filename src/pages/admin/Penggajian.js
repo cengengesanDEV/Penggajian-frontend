@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Navbar from "../../components/Navbar";
 import Footer from '../../components/Footer';
-import { Radio, Space, Tabs } from 'antd';
+import { Tabs } from 'antd';
 import Title from '../../components/Title';
 import DataPenggajian from './childern/DataPenggajian';
 import Laporan from './childern/Laporan';

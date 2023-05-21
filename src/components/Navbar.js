@@ -4,12 +4,21 @@ import React, {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import css from '../style/Home.module.css'
+import { useDispatch, useSelector } from "react-redux";
+import { Button, message } from "antd";
+import authAction from "../redux/actions/auth"
 
-function Navbar(props) {
-  const [role, setRole] = useState("admin");
+function Navbar() {
+
+  const roles = useSelector((state) => state.auth.profile.role)
+  const token = useSelector((state) => state.auth.profile.token)
+
+  const [role, setRole] = useState(roles)
   const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   const navigation = useNavigate()
+  const dispatch = useDispatch()
 
   // Menu admin
   const listMenuAdmin = [
@@ -40,45 +49,45 @@ function Navbar(props) {
     {
       name: "Dashboard",
       icon: "fa-brands fa-slack",
-      navigate: "dashboard",
+      navigate: "/home",
     },
     {
       name: "Data Karyawan",
       icon: "fa-solid fa-user",
-      navigate: "hr_listkaryawan",
+      navigate: "/hrd",
     },
-    {
-      name: "Verifikasi",
-      icon: "fa-solid fa-file-export",
-      navigate: "hr_verifikasi",
-    },
+    // {
+    //   name: "Verifikasi",
+    //   icon: "fa-solid fa-file-export",
+    //   navigate: "/hrd/verifikasi",
+    // },
   ];
 
   const listMenuKaryawan = [
     {
       name: "Dashboard",
       icon: "fa-brands fa-slack",
-      navigate: "dashboard",
+      navigate: "/home",
     },
     {
       name: "Profile",
       icon: "fa-solid fa-user",
-      navigate: "karyawan_profile",
+      navigate: "/karyawan_profile",
     },
     {
       name: "Presensi",
       icon: "fa-solid fa-person-chalkboard",
-      navigate: "karyawan_presensi",
+      navigate: "/karyawan_presensi",
     },
     {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
-      navigate: "karyawan_penggajian",
+      navigate: "/karyawan_penggajian",
     },
     {
       name: "Laporan Absensi",
       icon: "fa-solid fa-file-export",
-      navigate: "karyawan_absensi",
+      navigate: "/karyawan_absensi",
     },
   ];
 
@@ -86,19 +95,30 @@ function Navbar(props) {
   useEffect(() => {
     role === "admin"
       ? setList(listMenuAdmin)
-      : role === "hr"
+      : role === "hrd"
       ? setList(listMenuHr)
       : setList(listMenuKaryawan);
   }, [role]);
 
 
+  const logoutAPI = async () => {
+    try {
+      setLoading(true)
+      await dispatch(authAction.logoutThunk(token))
+      message.success('Logout Success')
+      navigation('/')
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      message.info('error server')
+      setLoading(false)
+    }
+  }
+
 
   return (
     <>
-      <nav
-        className='navbar bg-dark'
-        data-bs-theme='dark'
-      >
+      <nav className='navbar bg-dark' data-bs-theme='dark'>
         <div className='container'>
           <a className='navbar-brand' href='/'>
             CV. Dua Saudara Plastic
@@ -138,6 +158,7 @@ function Navbar(props) {
               {list.map((e, index) => (
                 <div
                   key={index}
+                  data-bs-dismiss='offcanvas'
                   style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px', padding:'10px 0 0 10px'}}
                   className='d-flex flex-row'
                   onClick={() => navigation(e.navigate)}
@@ -148,7 +169,7 @@ function Navbar(props) {
                   <p className="">{e.name}</p>
                 </div>
               ))}
-              <p>Logout</p>
+              <Button type="primary" danger loading={loading} onClick={logoutAPI}>Logout</Button>
             </div>
           </div>
         </div>
