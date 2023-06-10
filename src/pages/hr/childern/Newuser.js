@@ -4,6 +4,7 @@ import PicDefault from '../../../assets/user_image.jpg'
 import moment from 'moment/moment';
 import { CreateKaryawan, getDivision } from '../../../utility/axios';
 import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 function Newuser() {
 
@@ -28,12 +29,18 @@ function Newuser() {
   };
 
   const onChangeNumber = (value) => {
+    console.log({...numbering, ...value})
     setNumbering({...numbering, ...value})
   }
 
   const onSearch = (value) => {
     console.log('search:', value);
   };
+
+  const resetState = () => {
+    setData({})
+    setNumbering({})
+  }
 
 
 
@@ -86,8 +93,8 @@ function Newuser() {
 
   const createAPI = () => {
     setLoading(true)
+    if(!data.fullname  || !data.username || !data.email || !data.password || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
     let body = new FormData()
-    if(!data.fullname  || !data.username || !data.email || !data.password || !data.nik || !data.phone_number || !data.address || !data.note || !numbering.overtime_salary || !numbering.basic_salary || numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image) return (message.error('please correct input form again'), setLoading(false))
     data.note = !data.note ? '-' : data.note
     if(numbering.image) body.append('image', numbering.image);
     if(numbering.birth_date) body.append('birth_date', numbering.birth_date)
@@ -95,6 +102,7 @@ function Newuser() {
     if(numbering.id_division) body.append('id_division', numbering.id_division)
     if(numbering.basic_salary) body.append('basic_salary', numbering.basic_salary)
     if(numbering.overtime_salary) body.append('overtime_salary', numbering.overtime_salary)
+    if(numbering.norek) body.append('norek', numbering.norek)
     if(data.fullname) body.append('fullname', data.fullname)
     if(data.username) body.append('username', data.username)
     if(data.email) body.append('email', data.email)
@@ -106,11 +114,15 @@ function Newuser() {
     CreateKaryawan(body, token)
     .then((res) => {
       window.scrollTo(0, 0)
+      resetState()
+      setPreview(PicDefault)
       message.success('Create karyawan success')
     })
     .catch((err) => message.error(err.response.data.msg))
     .finally(() => {setLoading(false)})
   }
+
+
   
 
 
@@ -133,39 +145,44 @@ function Newuser() {
           <Col span={8}>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Fullname</span>
-              <Input placeholder="Fullname" name='fullname' onChange={onChange} allowClear />
+              <Input placeholder="Fullname" value={data.fullname} name='fullname' onChange={onChange} allowClear />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Username</span>
-              <Input placeholder="Username" name='username' onChange={onChange} allowClear />
+              <Input placeholder="Username" value={data.username} name='username' onChange={onChange} allowClear />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Email</span>
-              <Input  placeholder="email" name='email' onChange={onChange} allowClear />
+              <Input  placeholder="email" value={data.email} name='email' onChange={onChange} allowClear />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>password</span>
-              <Input placeholder="password" name='password' onChange={onChange} allowClear />
+              <Input placeholder="password" value={data.password} name='password' onChange={onChange} allowClear />
             </div>
           </Col>
 
           <Col span={8}>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Nomor induk karyawan (NIK)</span>
-              <Input placeholder="nik" name='nik' onChange={onChange} allowClear />
+              <Input placeholder="nik" value={data.nik} name='nik' onChange={onChange} allowClear />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Phone Number</span>
-              <Input placeholder="Phone number" name='phone_number' onChange={onChange} allowClear />
+              <Input placeholder="Phone number" value={data.phone_number} name='phone_number' onChange={onChange} allowClear />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Birth Date</span>
               {/* <Input placeholder="birth_date" name='birth_date' onChange={onChange} allowClear /> */}
-              <DatePicker format={'YYYY/MM/DD'} onChange={(e,dateString) => onChangeNumber({birth_date : moment(dateString).format('YYYY/MM/DD')})} />
+              <DatePicker 
+                allowClear={true} 
+                defaultValue={numbering.birth_date ? dayjs(numbering.birth_date , 'YYYY-MM-DD') : null} 
+                value={numbering.birth_date ? dayjs(numbering.birth_date , 'YYYY-MM-DD') : null} 
+                format={'YYYY-MM-DD'} onChange={(e,dateString) => onChangeNumber({birth_date : moment(dateString).format('YYYY-MM-DD')})} 
+              />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Address</span>
-              <Input placeholder="address" name='address' onChange={onChange} allowClear />
+              <Input placeholder="address" value={data.address} name='address' onChange={onChange} allowClear />
             </div>
           </Col>
 
@@ -177,6 +194,7 @@ function Newuser() {
                 style={{
                   width: '100%',
                 }}
+                value={numbering.role}
                 onChange={(values) => onChangeNumber({role:values})}
                 options={DataRole()}
                 onSearch={onSearch}
@@ -193,6 +211,7 @@ function Newuser() {
                 style={{
                   width: '100%',
                 }}
+                value={numbering.id_division}
                 onChange={(value) => onChangeNumber({id_division:value})}
                 options={dataDivisi()}
                 onSearch={onSearch}
@@ -210,6 +229,7 @@ function Newuser() {
                   width: '100%',
                 }}
                 defaultValue="1"
+                value={numbering.basic_salary}
                 min="0"
                 max="10000000000000000"
                 name="basic_salary"
@@ -227,6 +247,7 @@ function Newuser() {
                   width: '100%',
                 }}
                 defaultValue="1"
+                value={numbering.overtime_salary}
                 min="0"
                 max="10000000000000000"
                 formatter={(value) => `Rp ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -240,7 +261,27 @@ function Newuser() {
 
         </Row>
         <Row gutter={[24,24]} className='pt-3'>
-          <Col span={24}>
+          <Col span={8}>
+            <div className="d-flex flex-column gap-2 pt-2">
+              <span>Nomor Rekening</span>
+              <InputNumber
+                style={{
+                  width: '100%',
+                }}
+                defaultValue="1"
+                value={numbering.norek}
+                min="0"
+                max="10000000000000000"
+                name="norek"
+                // step="0.00"
+                // formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                // parser={(value) => value.replace(/\Rp\s?|(,*)/g, '')}
+                onChange={(value) => onChangeNumber({norek:value})}
+                stringMode
+              />
+            </div>
+          </Col>
+          <Col span={16}>
             <span>Noted</span>
             <TextArea
               showCount
@@ -249,6 +290,7 @@ function Newuser() {
                 height: 120,
                 marginBottom: 24,
               }}
+              value={data.noted}
               onChange={onChange}
               name='note'
               placeholder="Jika tidak ada note isi -"
@@ -256,6 +298,7 @@ function Newuser() {
           </Col>
         </Row>
         <Button type="primary" onClick={createAPI}>Create</Button>
+        <Button className='ms-2' danger onClick={resetState}>Clear</Button>
       </>}
     </>
   )

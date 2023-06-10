@@ -31,6 +31,7 @@ export const GetDetailKaryawan = (id, month, year, token) => {
 };
 
 
+
 // get semua karyawan
 export const GetAllKaryawan = (name, token) => {
   return axios.get(`${url_be}/users/all-karyawan?search=${name}`, {
@@ -54,13 +55,59 @@ export const CreateKaryawan = (body, token) => {
 };
 
 // get karyawan (fullname, id) buat di select
-export const getAll = () => {
+export const getAllSelect = () => {
   return axios.get(`${url_be}/users/name`);
 };
 
 // post lemburan
 export const CreateLemburan = (body, token) => {
   return axios.post(`${url_be}/penggajian/add-lembur`, body, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// get lemburan
+export const GetLemburan = (date, token) => {
+  return axios.get(`${url_be}/penggajian/lembur?date=${date}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// Get data karyawan berdasarakan ID
+export const karyawanDetailID = (id) => {
+  return axios.get(`${url_be}/users/karyawan/${id}`);
+};
+
+// patch lemburan
+export const PatchKaryawanID = (id, body, token) => {
+  return axios.patch(`${url_be}/users/profile/${id}`, body, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// untuk checkin
+export const CheckinAbsent = (token) => {
+  return axios.post(`${url_be}/absent/in`, {}, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// untuk checkout
+export const CheckoutAbsent = (token) => {
+  return axios.patch(`${url_be}/absent/out`, {}, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// untuk useeffect data kehadiran
+export const getAbsent = (token) => {
+  return axios.get(`${url_be}/absent/now`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+export const postKeterangan = (body,token) => {
+  return axios.post(`${url_be}/absent/not-in`, body, {
     headers: { "x-access-token": token },
   });
 };

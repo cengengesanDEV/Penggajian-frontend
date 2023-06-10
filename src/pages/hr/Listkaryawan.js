@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Navbar from "../../components/Navbar";
 import { Tabs } from 'antd';
 import Title from '../../components/Title';
@@ -11,28 +11,29 @@ import ViewData from './childern/ViewData';
 
 function ListKaryawan() {
 
-  const Content = [
-    {
-       title:'Data Laporan',
-       component: <Laporan />
-    },
-    {
-       title:'Create User',
-       component: <Newuser />
-    },
-    {
-       title:'Edit Karyawan',
-       component: <ViewData />
-    },
-    {
-       title:'Data Lemburan',
-       component: <Lembur />
-    },
-    {
-       title:'Verify Penggajian',
-       component: <Verify />
-    },
- ]
+
+   const Content = [
+      {
+         title:'Present',
+         component: <Laporan />
+      },
+      {
+         title:'Create User',
+         component: <Newuser />
+      },
+      {
+         title:'View Karyawan',
+         component: <ViewData />
+      },
+      {
+         title:'Data Lemburan',
+         component: <Lembur />
+      },
+      {
+         title:'Verify Penggajian',
+         component: <Verify />
+      },
+   ]
 
   return (
     <>

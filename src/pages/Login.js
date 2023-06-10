@@ -6,6 +6,7 @@ import authActions from "../redux/actions/auth";
 import { Button, Card, Col, Divider, Input, Row, Form, message } from "antd";
 import Pic_1 from '../assets/login_pic2.jpg'
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 function Login() {
 
@@ -143,7 +144,7 @@ function Login() {
           <br />
         </main>
         
-
+        <Footer />
 
       </div>
     </>

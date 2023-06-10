@@ -72,23 +72,23 @@ function Navbar() {
     {
       name: "Profile",
       icon: "fa-solid fa-user",
-      navigate: "/karyawan_profile",
+      navigate: "/karyawan/profile",
     },
     {
       name: "Presensi",
       icon: "fa-solid fa-person-chalkboard",
-      navigate: "/karyawan_presensi",
+      navigate: "/karyawan/presensi",
     },
     {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
-      navigate: "/karyawan_penggajian",
+      navigate: "/karyawan/penggajian",
     },
-    {
-      name: "Laporan Absensi",
-      icon: "fa-solid fa-file-export",
-      navigate: "/karyawan_absensi",
-    },
+    // {
+    //   name: "Laporan Absensi",
+    //   icon: "fa-solid fa-file-export",
+    //   navigate: "/karyawan_absensi",
+    // },
   ];
 
   // setRole
@@ -153,12 +153,12 @@ function Navbar() {
                 aria-label='Close'
               ></button>
             </div>
-            <div className={`offcanvas-body ${css.hover_menu}`}>
+            <div data-bs-dismiss='offcanvas' className={`offcanvas-body ${css.hover_menu}`}>
               {/* Body Menu */}
               {list.map((e, index) => (
                 <div
                   key={index}
-                  data-bs-dismiss='offcanvas'
+                  // data-bs-dismiss='offcanvas'
                   style={{cursor:'pointer', marginBottom:'10px', marginTop:'10px', padding:'10px 0 0 10px'}}
                   className='d-flex flex-row'
                   onClick={() => navigation(e.navigate)}
@@ -169,7 +169,7 @@ function Navbar() {
                   <p className="">{e.name}</p>
                 </div>
               ))}
-              <Button type="primary" danger loading={loading} onClick={logoutAPI}>Logout</Button>
+              <Button  type="primary" danger loading={loading} onClick={logoutAPI}>Logout</Button>
             </div>
           </div>
         </div>
