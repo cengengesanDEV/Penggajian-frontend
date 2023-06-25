@@ -13,26 +13,62 @@ function Laporan() {
   const [clock, setClock] = useState({
     inTime:null,
     outTime:null,
-    date:null
+    date:null,
+    lateTime:0
   })
   const [keterangan, setKeterangan] = useState({
     desc:null,
     status:null
   })
 
+  let jam = Number(moment().format('hh'))
+  const keteranganWaktu = moment().format('a')
+  let menit = moment().format('mm')
+  let detik = moment().format('ss')
 
-  const CheckinAPI = () => {
-    CheckinAbsent(token)
-    .then(() => {
-      getAPI()
-      message.success("Success check in")
-    })
-    .catch((err) => message.error(err.response.data.msg))
+
+  const perhitunganJam = () => {
+    // logika absensi jam masuk
+    if(keteranganWaktu == 'AM') {
+      return {
+        inTime: moment().format('hh:mm:ss'),
+        outTime: null,
+        date: moment().format('YYYY-MM-DD'),
+        lateTime: moment().format('hh:mm:ss') > '08:00:00' ? moment().format('hh:mm:ss') < '09:00:00' ? 1 : jam - 8 : 0
+      }
+    }else{
+      return {
+        inTime:`${(jam) + 12}:${menit}:${detik}`,
+        outTime: null,
+        date: moment().format('YYYY-MM-DD'),
+        lateTime: jam + 12 - 8
+      }
+    }
   }
+
+  const CheckinAPI = async () => {
+    try {
+      const time = await perhitunganJam()
+      await CheckinAbsent(time,token)
+      await getAPI()
+      message.success("Success check in");
+        
+      } catch (error) {
+        message.error(error.response.data.msg)
+    }
+  };
+
 
   const CheckOutAPI = () => {
     if(clock.inTime === null) return message.error('please check-in first')
-    CheckoutAbsent(token)
+    let outTime = moment().format('hh:mm:ss')
+    let date = moment().format('YYYY-MM-DD')
+    if(keteranganWaktu == 'AM') {
+        outTime = moment().format('hh:mm:ss')
+    }else{
+        outTime = `${(jam) + 12}:${menit}:${detik}`
+    }
+    CheckoutAbsent({outTime,date},token)
     .then(() => {
       getAPI()
       message.success("success check out")

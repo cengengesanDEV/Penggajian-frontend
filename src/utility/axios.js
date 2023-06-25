@@ -86,15 +86,15 @@ export const PatchKaryawanID = (id, body, token) => {
 };
 
 // untuk checkin
-export const CheckinAbsent = (token) => {
-  return axios.post(`${url_be}/absent/in`, {}, {
+export const CheckinAbsent = (body ,token) => {
+  return axios.post(`${url_be}/absent/in`, body, {
     headers: { "x-access-token": token },
   });
 };
 
 // untuk checkout
-export const CheckoutAbsent = (token) => {
-  return axios.patch(`${url_be}/absent/out`, {}, {
+export const CheckoutAbsent = (body, token) => {
+  return axios.patch(`${url_be}/absent/out`, body, {
     headers: { "x-access-token": token },
   });
 };
@@ -112,6 +112,70 @@ export const postKeterangan = (body,token) => {
   });
 };
 
+
+// edit profile karyawan
+export const patchProfileKaryawan = (body,token) => {
+  return axios.patch(`${url_be}/users/profile-karyawan`, body, {
+    headers: { "x-access-token": token },
+  });
+};
+
+
+// absensi karyawan
+export const absensiKaryawan = (month,year,token) => {
+  return axios.get(`${url_be}/absent/?month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// absensi karyawan
+export const penggajianKaryawan = (month,year,token) => {
+  return axios.get(`${url_be}/penggajian/gaji-karyawan?month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+
+// get all gaji di admin
+export const getALLPenggajianAdmin = (month,year,token) => {
+  return axios.get(`${url_be}/penggajian/data-penggajian?month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// select penggajian karyawan by id di admin
+export const GetkaryawanByIDPenggajian = (id, month, year, token) => {
+  return axios.get(`${url_be}/absent/employee/${id}?month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+
+export const verifyAdmin = (body, token) => {
+  return axios.post(`${url_be}/penggajian/gaji`,body , {
+    headers: { "x-access-token": token },
+  });
+};
+
+
+// verify hrd
+export const verifyHrd = (body, token) => {
+  return axios.post(`${url_be}/penggajian/verif_gaji`,body , {
+    headers: { "x-access-token": token },
+  });
+};
+
+// getverify hrd
+export const GetverifyHrd = (month,year,token) => {
+  return axios.get(`${url_be}/penggajian/get-verif-gaji?month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+
+export const GetInformation = () => {
+  return axios.get(`${url_be}/users/division/karyawan`)
+};
 
 
 

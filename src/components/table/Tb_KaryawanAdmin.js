@@ -49,7 +49,7 @@ function Tb_KaryawanAdmin() {
           <div className={`sticky-top ${css.search} `}>
             <p className={css.title_search}>Search :</p>
             <input type="search" onChange={(e) => setSearch(e.target.value)} className={css.input_search} />
-            <p className={css.desc_search}>find all the employee data you want to find.</p>
+            <p className={css.desc_search}>Can only search for employee names.</p>
           </div>
           <hr style={{color:'black'}} />
           <table className={`table table-responsive`} >
@@ -57,10 +57,10 @@ function Tb_KaryawanAdmin() {
               <tr className="">               
                 <th className="text-center" scope='col'>No</th>
                 <th scope='col'>NIK</th>
-                <th scope='col'>Nama</th>
-                <th scope='col'>Jabatan</th>
-                <th scope='col'>Alamat</th>
-                <th scope='col' className=" text-center">Aksi</th>
+                <th scope='col'>Name</th>
+                <th scope='col'>Position</th>
+                <th scope='col'>Address</th>
+                <th scope='col' className=" text-center">Action</th>
               </tr>
             </thead>
             <tbody className={`table-group-divider ${css.table_body}`}>

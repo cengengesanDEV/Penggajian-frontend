@@ -11,7 +11,7 @@ import authAction from "../redux/actions/auth"
 function Navbar() {
 
   const roles = useSelector((state) => state.auth.profile.role)
-  const token = useSelector((state) => state.auth.profile.token)
+  const token = useSelector((state) => state.auth.token)
 
   const [role, setRole] = useState(roles)
   const [list, setList] = useState([]);
@@ -37,11 +37,11 @@ function Navbar() {
       icon: "fa-solid fa-bug",
       navigate: "/admin/penggajian",
     },
-    {
-      name: "Laporan Absensi",
-      icon: "fa-solid fa-file-export",
-      navigate: "/admin/absensi",
-    },
+    // {
+    //   name: "Laporan Absensi",
+    //   icon: "fa-solid fa-file-export",
+    //   navigate: "/admin/absensi",
+    // },
   ];
 
   // Menu Hr
@@ -80,7 +80,7 @@ function Navbar() {
       navigate: "/karyawan/presensi",
     },
     {
-      name: "Laporan Penggajian",
+      name: "Laporan Penggajian & Absensi",
       icon: "fa-solid fa-bug",
       navigate: "/karyawan/penggajian",
     },

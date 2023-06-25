@@ -1,15 +1,41 @@
 import React, { useState } from 'react'
 
 import Tables from '../../../components/table/Tb_DetailPenggajian'
-import { Col, Input, Row } from 'antd';
+import { Button, Col, Input, Row } from 'antd';
+import { verifyAdmin } from '../../../utility/axios';
+import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 function DataPenggajian() {
-  const [data, setData] = useState({})
 
-  const onChange = (e) => {
-    // console.log(...data,{setData()});
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  const token = useSelector((state) => state.auth.token)
+  const [presensi, setPresensi] = useState(null)
+  const [overtime, setOvertime] = useState(null)
+  const [datakaryawan, setDatakaryawan] = useState({})
+  const [flag, setFlag] = useState(0)
+  const [loading, setLoading] = useState(false)
+
+
+  const handleVerify = () => {
+    setLoading(true)
+    verifyAdmin({
+      id_users: datakaryawan.id,
+      date: `${datakaryawan.date.year}-${datakaryawan.date.month}-25`,
+      total: Math.floor((Number(overtime) * Number(datakaryawan.overtime_salary)) + ((Number(datakaryawan.basic_salary)/22) * Number(presensi)))
+    }, token)
+    .then(res => {setDatakaryawan({});setPresensi(null);setOvertime(null); setFlag(Math.random() * 10000000000000)})
+    .catch((err) => console.log(err))
+    .finally(() => setLoading(false))
+  }
+
+  const costing = (price) => {
+    return (
+      "Rp " +
+      parseFloat(price)
+          .toFixed()
+          .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.")
+    );
+};
 
   return (
     <>
@@ -22,35 +48,37 @@ function DataPenggajian() {
         <Col span={8}>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Name</span>
-            <Input placeholder="Fullname" name='fullname' onChange={onChange} allowClear disabled />
+            <Input placeholder="Fullname" name='fullname' value={datakaryawan.fullname} allowClear disabled />
           </div>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Divisi</span>
-            <Input placeholder="Divisi" name='position' onChange={onChange} allowClear disabled />
+            <Input placeholder="Divisi" name='position' value={datakaryawan.position} allowClear disabled />
           </div>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
-            <span>Address</span>
-            <Input placeholder="Alamat" name='address' onChange={onChange} allowClear disabled />
+            <span>NIK</span>
+            <Input placeholder="Nomor Induk Karyawan" name='nik' value={datakaryawan.nik} allowClear disabled />
           </div>
         </Col>
         <Col span={8}>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Presence / month</span>
-            <Input placeholder="Absen Kehadiran" name='absensi' onChange={onChange} allowClear />
+            <Input placeholder="Absen Kehadiran" name='absensi' value={presensi} onChange={(e) => setPresensi(e.target.value)} allowClear />
           </div>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Work overtime / month</span>
-            <Input placeholder="Lemburan" name='lembur' onChange={onChange} allowClear />
+            <Input placeholder="Lemburan" name='lembur' value={overtime} onChange={(e) => setOvertime(e.target.value)} allowClear />
           </div>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Fix Salary / month</span>
-            <Input placeholder="Gaji" name='salary' onChange={onChange} allowClear disabled />
+            <Input placeholder="Gaji" name='salary' value={datakaryawan?.basic_salary == undefined ? costing(0) : costing(datakaryawan.basic_salary)} allowClear disabled />
           </div>
         </Col>
         <Col span={8}>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Income</span>
-            <Input placeholder="Pendapatan bersih" name='total' onChange={onChange} allowClear disabled />
+            <Input placeholder="Pendapatan bersih" name='total' 
+            value={presensi === null && overtime === null ? costing(0) : costing(Math.floor((Number(overtime) * Number(datakaryawan.overtime_salary)) + ((Number(datakaryawan.basic_salary)/22) * Number(presensi))))} 
+            allowClear disabled />
           </div>
           <div className="">
             <span>Noted :</span>
@@ -63,12 +91,12 @@ function DataPenggajian() {
           </div>
         </Col>
       </Row>
-      <button className='bg-dark text-white rounded-4 px-5 py-1'>Verify</button>
+      <Button loading={loading} onClick={() => handleVerify()} type='primary' disabled={presensi === null || overtime === null ? true : false} className='px-5 py-1'>Verify</Button>
       <br />
       <br />
       <br />
       <br />
-    <Tables  />
+    <Tables flag={flag} data={(value) => {setDatakaryawan(value); setPresensi(value.jumlah_masuk); setOvertime(value.total_jam_lembur) ;console.log(value)}}  />
     </>
   )
 }

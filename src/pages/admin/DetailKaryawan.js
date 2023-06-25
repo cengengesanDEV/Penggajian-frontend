@@ -54,21 +54,21 @@ function DetailKaryawan() {
 
           {/* content left */}
           <div className={`col-lg-4 ${css.container_image} `}>
-            <img src={Jelly} alt="" className={`${css.background_body}`} />
-            <img src={profile.image} alt="" className={css.image_user} />
+            <img src={Jelly} alt="Connection_Lost" className={`${css.background_body}`} />
+            <img src={profile.image} alt="Connection_Lost" className={css.image_user} />
           </div>
 
           {/* content center */}
           <div className="col-lg-8">
             <Descriptions title="Detail Karyawan" layout="vertical">
-              <Descriptions.Item label="Nama">{profile.fullname}</Descriptions.Item>
+              <Descriptions.Item label="Name">{profile.fullname}</Descriptions.Item>
               <Descriptions.Item label="Email">{profile.email}</Descriptions.Item>
               <Descriptions.Item label="NIK">{profile.nik}</Descriptions.Item>
-              <Descriptions.Item label="Nomor Telpon">{profile.phone_number}</Descriptions.Item>
-              <Descriptions.Item label="Tanggal Lahir">{moment(profile.birth_date).format('DD-MM-YYYY')}</Descriptions.Item>
-              <Descriptions.Item label="Jam Kerja">08:00 - 15:00</Descriptions.Item>
-              <Descriptions.Item label="Jabatan">{profile.position}</Descriptions.Item>
-              <Descriptions.Item label="Alamat">{profile.address}</Descriptions.Item>
+              <Descriptions.Item label="Phone Number">{profile.phone_number}</Descriptions.Item>
+              <Descriptions.Item label="Birth Date">{moment(profile.birth_date).format('DD-MM-YYYY')}</Descriptions.Item>
+              <Descriptions.Item label="Working Hours">08:00 - 15:00</Descriptions.Item>
+              <Descriptions.Item label="Position">{profile.position}</Descriptions.Item>
+              <Descriptions.Item label="Address">{profile.address}</Descriptions.Item>
             </Descriptions>
             </div>
           </div>

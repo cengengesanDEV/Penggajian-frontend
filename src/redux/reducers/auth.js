@@ -1,4 +1,5 @@
 import ACTION_STRING from "../actions/actionStrings";
+import imageDefault from "../../assets/imageDefault.png"
 
 const initialState = {
   isError: false,
@@ -10,12 +11,17 @@ const initialState = {
     id: "",
     email: "",
     fullname: "",
-    image: "",
+    image: imageDefault,
+    username: "",
     position: "",
+    role: "",
     phone_number: "",
     address: "",
     basic_salary: "",
     nik: "",
+    birth_date: "",
+    norek:"",
+    bank_name:""
   },
 };
 
@@ -51,8 +57,9 @@ const authReducer = (prevState = initialState, { type, payload }) => {
         profile: {
           id: payload.id,
           email: payload.email,
-          fullname: payload.fulname,
-          image: payload.image,
+          fullname: payload.fullname,
+          username: payload.username,
+          image: payload.image ?? imageDefault,
           position: payload.position,
           phone_number: payload.phone_number,
           address: payload.address,
@@ -60,7 +67,9 @@ const authReducer = (prevState = initialState, { type, payload }) => {
           nik: payload.nik,
           overtime_salary: payload.overtime_salary,
           birth_date: payload.birth_date,
-          role: payload.role
+          role: payload.role,
+          norek: payload.norek,
+          bank_name: payload.bank_name
         },
       };
 

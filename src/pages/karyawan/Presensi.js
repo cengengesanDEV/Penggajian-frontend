@@ -34,37 +34,67 @@ function Presensi() {
     inTime: null,
     outTime: null,
     date: null,
+    lateTime: 0
   });
   const [keterangan, setKeterangan] = useState({
     desc: null,
     status: null,
   });
 
-  const CheckinAPI = () => {
-    CheckinAbsent(token)
-      .then(() => {
-        getAPI();
-        message.success("Success check in");
-      })
-      .catch((err) =>
-        message.error(err.response.data.msg),
-      );
+
+  let jam = Number(moment().format('hh'))
+  const keteranganWaktu = moment().format('a')
+  let menit = moment().format('mm')
+  let detik = moment().format('ss')
+
+  
+  const perhitunganJam = () => {
+    // logika absensi jam masuk
+    if(keteranganWaktu == 'AM') {
+      return {
+        inTime: moment().format('hh:mm:ss'),
+        outTime: null,
+        date: moment().format('YYYY-MM-DD'),
+        lateTime: moment().format('hh:mm:ss') > '08:00:00' ? moment().format('hh:mm:ss') < '09:00:00' ? 1 : jam - 8 : 0
+      }
+    }else{
+      return {
+        inTime:`${(jam) + 12}:${menit}:${detik}`,
+        outTime: null,
+        date: moment().format('YYYY-MM-DD'),
+        lateTime: jam + 12 - 8
+      }
+    }
+  }
+
+  const CheckinAPI = async () => {
+    try {
+      const time = await perhitunganJam()
+      await CheckinAbsent(time,token)
+      await getAPI()
+      message.success("Success check in");
+        
+      } catch (error) {
+        message.error(error.response.data.msg)
+    }
   };
 
   const CheckOutAPI = () => {
-    if (clock.inTime === null)
-      return message.error(
-        "please check-in first",
-      );
-    CheckoutAbsent(token)
-      .then(() => {
-        getAPI();
-        message.success("success check out");
-      })
-      .catch((err) =>
-        message.error(err.response.data.msg),
-      );
-  };
+    if(clock.inTime === null) return message.error('please check-in first')
+    let outTime = moment().format('hh:mm:ss')
+    let date = moment().format('YYYY-MM-DD')
+    if(keteranganWaktu == 'AM') {
+        outTime = moment().format('hh:mm:ss')
+    }else{
+        outTime = `${(jam) + 12}:${menit}:${detik}`
+    }
+    CheckoutAbsent({outTime,date},token)
+    .then(() => {
+      getAPI()
+      message.success("success check out")
+    })
+    .catch((err) => message.error(err.response.data.msg))
+  }
 
   const getAPI = () => {
     getAbsent(token)
@@ -142,7 +172,7 @@ function Presensi() {
             </Button>
           </Col>
           <Col span={12}>
-            <span level={5}>Clockout : </span>
+            <span level={5}>Clock-out : </span>
             <Input
               style={{
                 width: "200px",
@@ -166,9 +196,7 @@ function Presensi() {
         <br />
         <br />
 
-        <Title level={4}>
-          Keterangan tidak hadir
-        </Title>
+        <Title level={4}>Description not present</Title>
         <hr />
 
         <Row>
@@ -183,8 +211,8 @@ function Presensi() {
                 })
               }
             >
-              <Radio value='izin'>Izin</Radio>
-              <Radio value='sakit'>Sakit</Radio>
+              <Radio value='izin'>Permission</Radio>
+              <Radio value='sakit'>Sick</Radio>
             </Radio.Group>
           </Col>
         </Row>
@@ -211,7 +239,7 @@ function Presensi() {
               // disabled={disable}
               // onChange={onChange}
               name='note'
-              placeholder='Keterangan'
+              placeholder='please write down your statement of permission'
             />
             <Button
               type='primary'

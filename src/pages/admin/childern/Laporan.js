@@ -1,6 +1,6 @@
 import { Button, DatePicker, Descriptions, Input, Select, Space, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { GetAllKaryawan, GetDetailKaryawan } from '../../../utility/axios'
+import { GetAllKaryawan, GetDetailKaryawan, GetInformation } from '../../../utility/axios'
 import css from "../../../style/components/TableKaryawanAdmin.module.css"
 import moment from 'moment'
 import { useSelector } from 'react-redux'
@@ -12,7 +12,12 @@ function Laporan() {
   const token = useSelector((state)=> state.auth.token)
 
   const [dataSelect, setDataselect] = useState([])
-  const [datatable, setDatatable] = useState([])
+  const [datatable, setDatatable] = useState({})
+  const [div, setDiv] = useState({
+    CEO:0,
+    HRD:0,
+    DEVELOPER:0
+  })
   const [idkaryawan, setIdkaryawan] = useState(0)
   const [loading, setLoading] = useState(false)
   const [tanggal, setTanggal] = useState({
@@ -61,21 +66,6 @@ function Laporan() {
   const onSearch = (value) => {
     console.log('search:', value);
   };
-  
-
-
-//   const objects = [
-//     reportDownload.map((e) => (
-//     {
-//       name: `${e.status}`,
-//       dateOfBirth: new Date(),
-//       cost: 2600,
-//       paid: false
-//     })
-//   )
-// ]
-
-
 
 
   const schema = [
@@ -144,8 +134,20 @@ function Laporan() {
     setLoading(false)
   }
   
-  
-  
+  useEffect(() => {
+    GetInformation()
+    .then(res => {
+      const HRD = res.data.data.find((e) => e.division_name === 'HRD').users_count ?? 0
+      const CEO = res.data.data.find((e) => e.division_name === 'CEO').users_count ?? 0
+      const DEVELOPER = res.data.data.find((e) => e.division_name === 'DEVELOPER').users_count ?? 0
+      setDiv({
+        CEO:CEO,
+        HRD:HRD,
+        DEVELOPER:DEVELOPER
+      })
+    })
+    .catch(err => console.log(err))
+  }, [])
 
   
 
@@ -158,11 +160,12 @@ function Laporan() {
   return (
     <>
       <Descriptions title="Semua data karyawan">
-        <Descriptions.Item label="Data karyawan">123 orang</Descriptions.Item>
-        <Descriptions.Item label="Karyawan/CEO">2 orang</Descriptions.Item>
-        <Descriptions.Item label="Karyawan/HRD">5 orang</Descriptions.Item>
-        <Descriptions.Item label="Karyawan/Produksi">12 orang</Descriptions.Item>
-        <Descriptions.Item label="Karyawan/Administrasi">4 orang</Descriptions.Item>        
+        <Descriptions.Item label="Data karyawan">{Number(div.CEO) + Number(div.DEVELOPER) + Number(div.HRD)} People</Descriptions.Item>
+        <Descriptions.Item label="">{}</Descriptions.Item>
+        <Descriptions.Item label="">{}</Descriptions.Item>
+        <Descriptions.Item label="CEO">{div.CEO} People</Descriptions.Item>
+        <Descriptions.Item label="HRD">{div.HRD} People</Descriptions.Item>
+        <Descriptions.Item label="Developer">{div.DEVELOPER} People</Descriptions.Item>
       </Descriptions>
 
       <br />
