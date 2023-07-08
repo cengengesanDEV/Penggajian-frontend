@@ -32,9 +32,16 @@ export const GetDetailKaryawan = (id, month, year, token) => {
 
 
 
-// get semua karyawan
+// get semua karyawan not hrd
 export const GetAllKaryawan = (name, token) => {
   return axios.get(`${url_be}/users/all-karyawan?search=${name}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
+// get semua karyawan not hrd
+export const GetAllRole = (name, token) => {
+  return axios.get(`${url_be}/users/all-role?search=${name}`, {
     headers: { "x-access-token": token },
   });
 };
@@ -135,6 +142,12 @@ export const penggajianKaryawan = (month,year,token) => {
   });
 };
 
+export const PdfAdmin = (id,month,year,token) => {
+  return axios.get(`${url_be}/penggajian/gaji-excel?id=${id}&month=${month}&year=${year}`, {
+    headers: { "x-access-token": token },
+  });
+};
+
 
 // get all gaji di admin
 export const getALLPenggajianAdmin = (month,year,token) => {
@@ -161,6 +174,13 @@ export const verifyAdmin = (body, token) => {
 // verify hrd
 export const verifyHrd = (body, token) => {
   return axios.post(`${url_be}/penggajian/verif_gaji`,body , {
+    headers: { "x-access-token": token },
+  });
+};
+
+// suspend
+export const suspend = (body, token) => {
+  return axios.patch(`${url_be}/users/suspend`,body , {
     headers: { "x-access-token": token },
   });
 };

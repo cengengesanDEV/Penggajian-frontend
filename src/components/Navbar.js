@@ -28,6 +28,11 @@ function Navbar() {
       navigate: "/home",
     },
     {
+      name: "Presensi",
+      icon: "fa-solid fa-file-export",
+      navigate: "/admin/absensi",
+    },
+    {
       name: "Data Karyawan",
       icon: "fa-solid fa-user",
       navigate: "/admin/all-karyawan",
@@ -36,12 +41,7 @@ function Navbar() {
       name: "Laporan Penggajian",
       icon: "fa-solid fa-bug",
       navigate: "/admin/penggajian",
-    },
-    // {
-    //   name: "Laporan Absensi",
-    //   icon: "fa-solid fa-file-export",
-    //   navigate: "/admin/absensi",
-    // },
+    },  
   ];
 
   // Menu Hr

@@ -1,11 +1,12 @@
 import { Button, Col, DatePicker, Input, InputNumber, Row, Select, Skeleton, Typography, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { GetAllKaryawan, PatchKaryawanID, getDivision, karyawanDetailID } from '../../../utility/axios'
+import { GetAllKaryawan, GetAllRole, PatchKaryawanID, getDivision, karyawanDetailID, suspend } from '../../../utility/axios'
 import css from "../../../style/components/TableKaryawanAdmin.module.css"
 import { useSelector } from 'react-redux'
 import moment from 'moment'
 import TextArea from 'antd/es/input/TextArea'
 import PicDefault from '../../../assets/user_image.jpg'
+import dayjs from 'dayjs'
 
 
 function ViewData() {
@@ -21,6 +22,7 @@ function ViewData() {
   const [role, setRole] = useState('')
   const [disable, setDisable] = useState(true)
   const [loadingImage, setLoadingImage] = useState(false)  
+  const [loadingSus, setLoadingSus] = useState(false)
   const [imageUrl, setImageUrl] = useState();
   const [preview, setPreview] = useState(PicDefault)
   const [divisi, setDivisi] = useState([])
@@ -63,7 +65,8 @@ function ViewData() {
 
 
 
-  const handleImage = (e) => {
+  const handleImageEdit = (e) => {
+    // console.log("qweqwe",URL.createObjectURL(e.target.files[0]))
     setLoadingImage(true)
     if(e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg" || e.target.files[0].type === "image/jpg") {
       setImageUrl(e.target.files[0])
@@ -111,7 +114,7 @@ function ViewData() {
 
   const getAPI = () => {
     // setLoading(true)
-    GetAllKaryawan(search, token)
+    GetAllRole(search, token)
     .then((res)=>{
       // console.log("allkaryawan",res.data)
       setDataTable(res.data.data)
@@ -127,7 +130,7 @@ function ViewData() {
 
   const patchAPI = () => {
     setLoading(true)
-    console.log( !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek)
+    // console.log( !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek)
     if(!data.id || !data.fullname  || !data.username || !data.email || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
     let body = new FormData()
     data.note = !data.note ? '-' : data.note
@@ -170,15 +173,23 @@ function ViewData() {
     }
   }
 
+  const handleSuspend = (id, statusSuspend) => {
+    setLoadingSus(true)
+    suspend({id, flags: statusSuspend}, token)
+    .then((res) => {message.success(res.data.msg); getAPI()})
+    .catch((err) => message.error("internal server error"))
+    .finally(() => setLoadingSus(false))
+  }
+
   return (
     <>
       <Title level={4}>Edit Karyawan</Title>
       <hr />
       <Row>
         <Col span={24}>
-          {loading ? <Skeleton.Image active={true} /> : <img src={preview !== null ? preview : PicDefault} alt="Picture_user" width={100} height={120} />}
-          <label style={{color:'white',backgroundColor:`${disable ? 'grey' : '#1677ff'} `, marginLeft:'10px',padding:'5px 10px', borderRadius:'10px', cursor:'pointer'}} htmlFor="image_preview">Click here to upload picture</label>
-          <input type="file" disabled={disable} onChange={(e) => handleImage(e)} name="" id="image_preview" style={{display:'none'}} />
+          {loading ? <Skeleton.Image active={true} /> : <img src={preview} alt="Picture_user" width={100} height={120} />}
+          <label style={{color:'white',backgroundColor:`${disable ? 'grey' : '#1677ff'} `, marginLeft:'10px',padding:'5px 10px', borderRadius:'10px', cursor:'pointer'}} htmlFor="image_preview_edit">Click here to upload picture</label>
+          <input type="file" disabled={disable} onChange={(e) => handleImageEdit(e)} name="" id="image_preview_edit" style={{display:'none'}} />
         </Col>
       </Row>
 
@@ -199,7 +210,7 @@ function ViewData() {
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>password</span>
-              <Input placeholder="Password can be change only users" value={data.password} name='password' onChange={onChange} allowClear disabled={true} />
+              <Input placeholder="Password can be change only users" value={data.password} name='password'  allowClear disabled={true} />
             </div>
           </Col>
 
@@ -215,7 +226,7 @@ function ViewData() {
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Birth Date</span>
               {/* <Input placeholder="birth_date" name='birth_date' onChange={onChange} allowClear /> */}
-              <DatePicker format={'YYYY-MM-DD'} placeholder={numbering.birth_date ? moment(numbering.birth_date).format('YYYY-MM-DD') : "inset birth date"}  onChange={(e,dateString) => onChangeNumber({birth_date : moment(dateString).format('YYYY/MM/DD')})} disabled={disable} />
+              <DatePicker format={'YYYY-MM-DD'} value={dayjs(moment(numbering.birth_date).format('YYYY-MM-DD'), 'YYYY-MM-DD')} placeholder={numbering.birth_date ? moment(numbering.birth_date).format('YYYY-MM-DD') : "inset birth date"}  onChange={(e,dateString) => onChangeNumber({birth_date : moment(dateString).format('YYYY/MM/DD')})} disabled={disable} />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
               <span>Address</span>
@@ -340,7 +351,7 @@ function ViewData() {
             />
           </Col>
         </Row>
-        <Button type="primary" onClick={patchAPI}>Create</Button>
+        <Button type="primary" loading={loading} onClick={patchAPI}>Create</Button>
         <Button className='ms-2' danger onClick={resetState}>Clear</Button>
 
 
@@ -378,8 +389,11 @@ function ViewData() {
                   <td style={{ width: "200px" }}>{e.fullname?.length  > 35 ? `${e.fullname?.slice(0,35)}...` : e.fullname}</td>
                   <td  style={{ width: "100px" }}>{e.position?.length  > 12 ? `${e.position?.slice(0,12)}...` : e.position}</td>
                   <td style={{ width: "200px" }}>{e.address?.length  > 45 ? `${e.address?.slice(0,45)}...` : e.address}</td>
-                  <td className=" text-center">
-                    <button className={`${css.detail_button}`} onClick={() => handleGetKaryawan(e.id)}>Edit</button>
+                  <td className="text-center d-flex gap-3">
+                    {/* <button className={`${css.detail_button}`} onClick={() => handleGetKaryawan(e.id)}>Edit</button> */}
+                    <Button type='primary' onClick={() => handleGetKaryawan(e.id)}>Edit</Button>
+                    <Button loading={loadingSus} disabled={e.suspend === 'active' ? true : false} onClick={() => handleSuspend(e.id, '0')}>Active</Button>
+                    <Button loading={loadingSus} danger disabled={e.suspend === 'deactive' ? true : false} onClick={() => handleSuspend(e.id, '1')}>Deactive</Button>
                   </td>
                 </tr>
               ))}

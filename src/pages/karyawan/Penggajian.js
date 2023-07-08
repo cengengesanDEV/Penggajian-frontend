@@ -32,6 +32,7 @@ function Presensi() {
     try {
       const getabsent = await absensiKaryawan(date.month, date.year, token)
       const getsalary = await penggajianKaryawan(date.month, date.year, token)
+      if(getsalary.data.data.length == 0) setSalary({})
       if(getsalary.data.data[0]) setSalary(getsalary?.data?.data[0])
       setPresensi(getabsent.data.data.data_absent)
       setKeterangan(getabsent.data.data)
@@ -104,7 +105,7 @@ function Presensi() {
       <br />
 
       <Descriptions title="Detail Salary">
-        <Descriptions.Item label="Total Salary">{costing(salary.total_salary) ?? '-'}</Descriptions.Item>
+        <Descriptions.Item label="Total Salary">{salary.total_salary ?? '-'}</Descriptions.Item>
         <Descriptions.Item label="Total Entry">{keterangan.jumlah_masuk ?? '-'}</Descriptions.Item>
         <Descriptions.Item label="Total permissions">{keterangan.jumlah_izin ?? '-'}</Descriptions.Item>
         <Descriptions.Item label="Total Sick">{keterangan.jumblah_sakit ?? '-'}</Descriptions.Item>

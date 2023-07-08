@@ -82,7 +82,8 @@ function Tb_DetailPenggajian(props) {
             </tr>
           </thead>
           <tbody className={`table-group-divider ${css.table_body}`}>
-              {dataTable?.map((e,i) => (
+              {dataTable?.map((e,i) => 
+                (
                 <tr key={i}>
                   <th scope='row'className="text-center">{i+1}</th>
                   <td>{e.nik}</td>
@@ -93,7 +94,8 @@ function Tb_DetailPenggajian(props) {
                   <td className='text-center'><Tag color={e.penggajian.status === 'belum diverifikasi' ? "red" : e.penggajian.status === 'terverifikasi' ? 'green' : 'warning'} >{e.penggajian.status}</Tag></td>
                   <td className='text-center'><Button disabled={e.penggajian.status === 'belum diverifikasi' ? false : true} type='primary' onClick={() => handleView(e.id)}>View Data</Button></td>
                 </tr>
-              ))}
+                )
+              )}
           </tbody>
         </table>
       </div>

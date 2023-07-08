@@ -13,10 +13,10 @@ function ListKaryawan() {
 
 
    const Content = [
-      {
-         title:'Present',
-         component: <Laporan />
-      },
+      // {
+      //    title:'Present',
+      //    component: <Laporan />
+      // },
       {
          title:'Create User',
          component: <Newuser />

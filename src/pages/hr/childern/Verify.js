@@ -61,6 +61,7 @@ function Verify() {
     {
       title: 'Name',
       width: 150,
+      fixed: 'left',
       dataIndex: 'fullname',
       key: 'fullname',
     },
@@ -76,6 +77,18 @@ function Verify() {
       dataIndex: 'total_salary',
       key: 'total_salary',
       render: (e,data) => <>{costing(data.total_salary)}</>
+    },
+    {
+      title: 'Bank',
+      // width: 400,
+      dataIndex: 'bank_name',
+      key: '3',
+    },
+    {
+      title: 'Nomor Rekening',
+      // width: 400,
+      dataIndex: 'norek',
+      key: '4',
     },
     {
       title: 'Date',
@@ -103,7 +116,7 @@ function Verify() {
       }
       const result = await verifyHrd(body, token)
       setDeps(Math.random() * 10000000000000)
-      message.success(`income successfully ${String(id) === '0' ? 'Approve' : 'Cancelled'}`)
+      message.success(`income successfully ${id == '0' ? 'Approve' : 'Cancelled'}`)
     } catch (error) {
       console.log(error)
       message.error('Internal Server Error')

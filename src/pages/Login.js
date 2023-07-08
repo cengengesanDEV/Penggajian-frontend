@@ -27,7 +27,7 @@ function Login() {
       navigate('/home')
       setLoading(false)
     } catch (error) {
-      message.error("Username / Password WRONG!")
+      message.error(error)
       setLoading(false)
     }
   };

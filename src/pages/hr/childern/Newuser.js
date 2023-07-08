@@ -47,6 +47,7 @@ function Newuser() {
   const handleImage = (e) => {
     setLoadingImage(true)
     if(e.target.files[0].type === "image/png" || e.target.files[0].type === "image/jpeg" || e.target.files[0].type === "image/jpg") {
+      // console.log(e.target)
       setImageUrl(e.target.files[0])
       setPreview(URL.createObjectURL(e.target.files[0]))
       onChangeNumber({image:e.target.files[0]})

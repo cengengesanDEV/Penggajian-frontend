@@ -40,7 +40,7 @@ function Lembur() {
     let arr = []
     let i = 0
     dataSelect.map((e,index) => {
-      if(e.role === 'admin'){
+      if(e.role === 'hrd'){
         return
       }else{
         i += 1
@@ -128,7 +128,7 @@ function Lembur() {
           (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
         }
       />
-      <span className='ps-3'>data admin tidak ada di dalam select</span>
+      <span className='ps-3'>Role HRD can't get work overtime</span>
       <Row>
         <Col className='pt-3' span={12}>
           <Descriptions title="Detail">
