@@ -94,7 +94,7 @@ function Newuser() {
 
   const createAPI = () => {
     setLoading(true)
-    if(!data.fullname  || !data.username || !data.email || !data.password || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
+    if(!data.fullname  || !data.username || !data.email || !data.bank_name || !data.password || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
     let body = new FormData()
     data.note = !data.note ? '-' : data.note
     if(numbering.image) body.append('image', numbering.image);
@@ -107,6 +107,7 @@ function Newuser() {
     if(data.fullname) body.append('fullname', data.fullname)
     if(data.username) body.append('username', data.username)
     if(data.email) body.append('email', data.email)
+    if(data.bank_name) body.append('bank_name', data.bank_name)
     if(data.password) body.append('password', data.password)
     if(data.nik) body.append('nik', data.nik)
     if(data.phone_number) body.append('phone_number', data.phone_number)
@@ -282,7 +283,13 @@ function Newuser() {
               />
             </div>
           </Col>
-          <Col span={16}>
+          <Col span={8}>
+          <div className="d-flex flex-column gap-2 pt-2">
+              <span>Bank Name</span>
+              <Input  placeholder="Bank Name" value={data.bank_name} name='bank_name' onChange={onChange} allowClear />
+            </div>
+          </Col>
+          <Col span={8}>
             <span>Noted</span>
             <TextArea
               showCount

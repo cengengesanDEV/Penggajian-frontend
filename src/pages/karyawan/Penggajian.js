@@ -111,9 +111,8 @@ function Presensi() {
         <Descriptions.Item label="Total Sick">{keterangan.jumblah_sakit ?? '-'}</Descriptions.Item>
         
         <Descriptions.Item label="Date Paid">{salary.date_paid?.slice(0,10) ?? '-'}</Descriptions.Item>
-        <Descriptions.Item label="Noted">
-          Total Salary = Basic salary + (overtime salary x overtime hours)
-        </Descriptions.Item>
+        <Descriptions.Item label="Noted">Total Salary = Basic salary + (overtime salary x overtime hours)</Descriptions.Item>
+        <Descriptions.Item label="Total Lembur">{salary.total_jam_lembur ?? '-'}</Descriptions.Item>
       </Descriptions>
       
 

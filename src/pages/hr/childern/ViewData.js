@@ -131,7 +131,7 @@ function ViewData() {
   const patchAPI = () => {
     setLoading(true)
     // console.log( !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek)
-    if(!data.id || !data.fullname  || !data.username || !data.email || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
+    if(!data.id || !data.bank_name || !data.fullname  || !data.username || !data.email || !data.nik || !data.phone_number || !data.address || !numbering.overtime_salary || !numbering.basic_salary || !numbering.id_division || !numbering.role || !numbering.birth_date || !numbering.image || !numbering.norek) {return (message.error('please correct input form again'), setLoading(false))}
     let body = new FormData()
     data.note = !data.note ? '-' : data.note
     if(numbering.image) body.append('image', numbering.image);
@@ -144,6 +144,7 @@ function ViewData() {
     if(data.fullname) body.append('fullname', data.fullname)
     if(data.username) body.append('username', data.username)
     if(data.email) body.append('email', data.email)
+    if(data.bank_name) body.append('bank_name', data.bank_name)
     if(data.nik) body.append('nik', data.nik)
     if(data.phone_number) body.append('phone_number', data.phone_number)
     if(data.address) body.append('address', data.address)
@@ -334,7 +335,13 @@ function ViewData() {
               />
             </div>
           </Col>
-          <Col span={16}>
+          <Col span={8}>
+          <div className="d-flex flex-column gap-2 pt-2">
+              <span>Bank Name</span>
+              <Input  placeholder="Bank Name" value={data.bank_name} name='bank_name' onChange={onChange} allowClear />
+            </div>
+          </Col>
+          <Col span={8}>
             <span>Noted</span>
             <TextArea
               showCount

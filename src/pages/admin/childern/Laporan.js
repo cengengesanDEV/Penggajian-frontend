@@ -15,11 +15,7 @@ function Laporan() {
   const { Title } = Typography
   const [dataSelect, setDataselect] = useState([])
   const [datatable, setDatatable] = useState({})
-  const [div, setDiv] = useState({
-    CEO:0,
-    HRD:0,
-    DEVELOPER:0
-  })
+  const [div, setDiv] = useState({})
   const [idkaryawan, setIdkaryawan] = useState(0)
   const [idkaryawanpdf, setIdkaryawanpdf] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -154,21 +150,24 @@ function Laporan() {
     setLoading(false)
   }
   
-  useEffect(() => {
-    GetInformation()
-    .then(res => {
-      const HRD = res.data.data.find((e) => e.division_name === 'HRD').users_count ?? 0
-      const CEO = res.data.data.find((e) => e.division_name === 'CEO').users_count ?? 0
-      const DEVELOPER = res.data.data.find((e) => e.division_name === 'DEVELOPER').users_count ?? 0
-      setDiv({
-        CEO:CEO,
-        HRD:HRD,
-        DEVELOPER:DEVELOPER
-      })
-    })
-    .catch(err => console.log(err))
-  }, [])
+  // useEffect(() => {
+  //   GetInformation()
+  //   .then(res => {
+  //     console.log(res.data.data, "aljshdjahsjdh");
+  //     // let HRD = res.data.data.find((e) => e.division_name === 'HRD').users_count ?? 0
+  //     // let ADMINISTRASI = res.data.data.find((e) => e.division_name === 'ADMINISTRASI').users_count ?? 0
+  //     // let KARYAWAN = res.data.data.find((e) => e.division_name === 'KARYAWAN').users_count ?? 0
+  //     // console.log(HRD, ADMINISTRASI, KARYAWAN, "aljshdjahsjdh")
+  //     return setDiv({
+  //       KARYAWAN:Number(res.data.data[0].users_count) ?? 0,
+  //       HRD: Number(res.data.data[1].users_count) ?? 0,
+  //       ADMINISTRASI:Number(res.data.data[2].users_count) ?? 0
+  //     })
+  //   })
+  //   .catch(err => console.log(err))
+  // }, [])
 
+  // console.log(div,'aljshdjahsjdh')
 
   
 
@@ -193,18 +192,14 @@ function Laporan() {
 
   return (
     <>
-      <Descriptions title="Semua data karyawan">
-        <Descriptions.Item label="Data karyawan">{Number(div.CEO) + Number(div.DEVELOPER) + Number(div.HRD)} People</Descriptions.Item>
+      {/* <Descriptions title="Semua data karyawan">
+        <Descriptions.Item label="Data karyawan">{Number(div.ADMINISTRASI ?? 0) + Number(div.KARYAWAN ?? 0) + Number(div.HRD ?? 0)} People</Descriptions.Item>
         <Descriptions.Item label="">{}</Descriptions.Item>
         <Descriptions.Item label="">{}</Descriptions.Item>
-        <Descriptions.Item label="CEO">{div.CEO} People</Descriptions.Item>
-        <Descriptions.Item label="HRD">{div.HRD} People</Descriptions.Item>
-        <Descriptions.Item label="Developer">{div.DEVELOPER} People</Descriptions.Item>
-      </Descriptions>
-
-      <br />
-      <br />
-      <br />
+        <Descriptions.Item label="ADMINISTRASI">{div.ADMINISTRASI ?? 0} People</Descriptions.Item>
+        <Descriptions.Item label="HRD">{div.HRD ?? 0} People</Descriptions.Item>
+        <Descriptions.Item label="KARYAWAN">{div.KARYAWAN ?? 0} People</Descriptions.Item>
+      </Descriptions> */}
       <p>Select account karyawan if you want to download document excel or pdf about that <b>(the default date filter is the current time)</b> </p>
       <hr />
       
