@@ -76,8 +76,11 @@ function DataPenggajian() {
         <Col span={8}>
           <div className="" style={{marginTop:'10px', marginBottom:'10px'}}>
             <span>Income</span>
-            <Input placeholder="Pendapatan bersih" name='total' 
+            {/* <Input placeholder="Pendapatan bersih" name='total' 
             value={presensi === null && overtime === null ? costing(0) : costing(Math.floor((Number(overtime) * Number(datakaryawan.overtime_salary)) + ((Number(datakaryawan.basic_salary)/22) * Number(presensi))))} 
+            allowClear disabled /> */}
+            <Input placeholder="Pendapatan bersih" name='total' 
+            value={presensi === null && overtime === null ? costing(0) : costing(Math.floor((Number(overtime) * Number(datakaryawan.overtime_salary)) + (Number(datakaryawan.basic_salary) * Number(presensi))))} 
             allowClear disabled />
           </div>
           <div className="">

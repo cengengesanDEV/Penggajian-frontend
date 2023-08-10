@@ -7,6 +7,7 @@ import { Button, Card, Col, Divider, Input, Row, Form, message } from "antd";
 import Pic_1 from '../assets/login_pic2.jpg'
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Login() {
 
@@ -99,6 +100,10 @@ function Login() {
                     <Input.Password />
                   </Form.Item>
 
+                  <ReCAPTCHA
+                    sitekey="6LeUkJYnAAAAAMYEZHUNnk5Ow4VE-3M962z2Lv8F"
+                    onChange={(e) => console.log("cap", e)}
+                  />,
 
                   <Form.Item
                     wrapperCol={{

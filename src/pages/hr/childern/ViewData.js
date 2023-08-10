@@ -273,7 +273,7 @@ function ViewData() {
               />
             </div>
             <div className="d-flex flex-column gap-2 pt-2">
-              <span>Basic Salary</span>
+              <span>Salary / days</span>
               {/* <Input placeholder="basic_salary" name='basic_salary' onChange={onChange} allowClear /> */}
               <InputNumber
                 disabled={disable}
