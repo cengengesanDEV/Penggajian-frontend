@@ -8,6 +8,7 @@ import Pic_1 from '../assets/login_pic2.jpg'
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import ReCAPTCHA from "react-google-recaptcha";
+import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 
 function Login() {
 
@@ -112,6 +113,7 @@ function Login() {
                       onChange={(e) => console.log(e)}
                     />
                   </form>
+                  {/* <LoadCanvasTemplate /> */}
 
                   <Form.Item
                     wrapperCol={{
