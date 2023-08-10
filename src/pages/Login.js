@@ -39,7 +39,11 @@ function Login() {
     message.error("please input data form login first")
     setLoading(false)
   };
-
+  const recaptchaRef = React.createRef();
+  const onSubmit = () => {
+    const recaptchaValue = recaptchaRef.current.getValue();
+    // props.onSubmit(recaptchaValue);
+  }
   return (
     <>
       <div className="">
@@ -100,10 +104,13 @@ function Login() {
                     <Input.Password />
                   </Form.Item>
 
-                  <ReCAPTCHA
-                    sitekey="6LeUkJYnAAAAAMYEZHUNnk5Ow4VE-3M962z2Lv8F"
-                    onChange={(e) => console.log("cap", e)}
-                  />,
+                  <form onSubmit={onSubmit} >
+                    <ReCAPTCHA
+                      ref={recaptchaRef}
+                      sitekey="6LcU7pYnAAAAAKZHuxE8WORwsnsh0ehnyxQsvYHA"
+                      onChange={(e) => console.log(e)}
+                    />
+                  </form>
 
                   <Form.Item
                     wrapperCol={{
