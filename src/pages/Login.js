@@ -12,16 +12,20 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, val
 
 function Login() {
 
+  const recaptchaRef = React.createRef();
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const { Meta } = Card;
 
   const [loading, setLoading] = useState(false)
+  const [cap, setCap] = useState(null)
 
 
   // data login terisi semua
   const onFinish =  async (values) => {
     try {
+      const recaptchaValue = recaptchaRef.current.getValue();
+      if(!recaptchaValue) return message.info('please insert captcha')
       setLoading(true)
       message.warning("Please Wait")
       await dispatch(authActions.loginThunk({email: values.email, password:values.password}));
@@ -40,7 +44,7 @@ function Login() {
     message.error("please input data form login first")
     setLoading(false)
   };
-  const recaptchaRef = React.createRef();
+  
   const onSubmit = () => {
     const recaptchaValue = recaptchaRef.current.getValue();
     console.log("recaptchaValue", recaptchaValue)
@@ -106,14 +110,11 @@ function Login() {
                     <Input.Password />
                   </Form.Item>
 
-                  <form onSubmit={onSubmit} >
                     <ReCAPTCHA
                       ref={recaptchaRef}
                       sitekey="6LcU7pYnAAAAAKZHuxE8WORwsnsh0ehnyxQsvYHA"
-                      onChange={(e) => console.log(e)}
+                      // onChange={(e) => console.log(e)}
                     />
-                  </form>
-                  {/* <LoadCanvasTemplate /> */}
 
                   <Form.Item
                     wrapperCol={{
