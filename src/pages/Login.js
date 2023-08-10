@@ -42,7 +42,8 @@ function Login() {
   const recaptchaRef = React.createRef();
   const onSubmit = () => {
     const recaptchaValue = recaptchaRef.current.getValue();
-    // props.onSubmit(recaptchaValue);
+    console.log("recaptchaValue", recaptchaValue)
+    props.onSubmit(recaptchaValue);
   }
   return (
     <>
