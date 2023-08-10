@@ -43,7 +43,7 @@ function Login() {
   const onSubmit = () => {
     const recaptchaValue = recaptchaRef.current.getValue();
     console.log("recaptchaValue", recaptchaValue)
-    props.onSubmit(recaptchaValue);
+    // props.onSubmit(recaptchaValue);
   }
   return (
     <>
